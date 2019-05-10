@@ -1,0 +1,49 @@
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+<style>
+	.devoured {
+		opacity: .5;
+		color: blue;
+	}
+
+</style>
+<center>
+<h1>DEVOUR BURGERS</h1>
+<img src="assets/images/burger.jpg" alt="Burger" />
+
+<form action="/api/new/" method="POST">
+	<textarea type="text" name="name"></textarea>
+	<button type="submit">Submit</button>
+</form>
+
+
+
+<ul>
+	
+	{{#each burgers}}
+	  
+		<ul  {{#if this.devoured}} class="devoured"{{/if}}>
+
+			<p>{{this.burger_name}}</p>
+ 			<a href="/api/devour/{{this.id}}">DEVOUR</a>
+ 		</ul>
+	{{/each}}
+</ul>
+
+</center>
+<script type="text/javascript">
+	$(".devour-bttn").on("click", function(){
+		var id = parseInt($(this).attr("data-id"));
+		$.ajax({
+		  method: "GET",
+		  url: "/api/devour/" + id
+		  })
+		  .done(function( msg ) {
+		  	console.log("devoured")
+		  });
+})
+
+</script>
